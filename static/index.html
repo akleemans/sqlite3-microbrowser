@@ -18,43 +18,12 @@
   </md-content>
 </div>
 
-
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-
-  <script type="text/javascript">
-    angular.module('app', ['ngMaterial'])
-    .controller('ContentCtrl', ['$scope', 'TabService', function($scope, TabService) {
-        // $scope.tables
-
-        $scope.myfunction = function(lulz) {
-            // test
-        };
-        TableService.fetchTab().then(function successCallback(response) {
-            $scope.tables = TabService.getTabs();
-            $route.reload();
-        });
-
-    }])
-    .factory('TabService', ['$http', function ($http) {
-        var tables = [];
-        return {
-            fetchTables: function () {
-                return $http.get("/tables/").success(function (data) {
-                    tables = data;
-                });
-            },
-            getTables: function () {
-                return tables;
-            }
-        }
-    }]);
-
-  </script>
-
+  <script src="static/app.js"></script>
 </body>
 </html>
