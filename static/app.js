@@ -1,12 +1,12 @@
-angular.module('app', ['ngMaterial'])
-.controller('ContentCtrl', ['$scope', 'TableService', function($scope, TabService) {
+angular.module('app', ['ngMaterial', 'ngRoute'])
+.controller('ContentCtrl', ['$scope', 'TableService', '$route', function($scope, TableService, $route) {
     // $scope.tables
 
     $scope.myfunction = function(lulz) {
         // test
     };
-    TableService.fetchTab().then(function successCallback(response) {
-        $scope.tables = TabService.getTabs();
+    TableService.fetchTables().then(function successCallback(response) {
+        $scope.tables = TableService.getTables();
         $route.reload();
     });
 
@@ -16,7 +16,7 @@ angular.module('app', ['ngMaterial'])
     return {
         fetchTables: function () {
             return $http.get("/tables/").success(function (data) {
-                tables = data;
+                tables = data['results'];
             });
         },
         getTables: function () {
