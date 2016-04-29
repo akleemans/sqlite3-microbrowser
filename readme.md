@@ -1,5 +1,4 @@
-#Instant DB Viewer
-
+# Instant SQLite DB Viewer
 
 ## Goal
 - Beliebige DB in Verzeichnis droppen, server.py starten, Browser starten und DB viewen/editieren können
@@ -10,4 +9,4 @@
 
 ## Prerequisites
 * Python with Flask: `pip install flask`
-* SQLite 
+* SQLite

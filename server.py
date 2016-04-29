@@ -1,10 +1,25 @@
+import os
 from flask import Flask, request, jsonify, send_from_directory, render_template
 
 app = Flask(__name__, static_folder='static')
 
+def get_db_name():
+    for f in os.listdir('.'):
+        if f.find('.') >= 0 and f.split('.')[1] in ['sqlite', 'sqlite3', 'db3', 'db']:
+            return f
+    return 'DB not found'
+
+
 #@app.route('/static/<path:path>')
 #def static(path):
 #    return send_from_directory('static', path)
+
+# init
+
+db = get_db_name()
+print 'DB:', db
+
+# routes
 
 @app.route('/')
 def root():
