@@ -1,5 +1,6 @@
 import os
-from flask import Flask, request, jsonify, send_from_directory, render_template
+import sqlite3
+from flask import Flask, request, g, jsonify, send_from_directory, render_template
 
 app = Flask(__name__, static_folder='static')
 
@@ -9,6 +10,22 @@ def get_db_name():
             return f
     return 'DB not found'
 
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DB_NAME)
+    return db
+
+# query the db - from http://flask.pocoo.org/docs/0.10/patterns/sqlite3/
+def query_db(query, args=(), one=False):
+    cur = get_db().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    get_db().commit()
+    return (rv[0] if rv else None) if one else rv
+
+def get_tables():
+    return query_db("SELECT name FROM sqlite_master WHERE type='table'")
 
 #@app.route('/static/<path:path>')
 #def static(path):
@@ -16,8 +33,8 @@ def get_db_name():
 
 # init
 
-db = get_db_name()
-print 'DB:', db
+DB_NAME = get_db_name()
+print 'Database:', DB_NAME
 
 # routes
 
@@ -31,9 +48,9 @@ def root():
 
 @app.route('/tables/')
 def tables():
-    data = [{"label": "Overview", "name": "Overview", "content": "foo"},
-    {"label": "Table 1", "name": "table1", "content": "bar"}]
-    return jsonify(results=data)
+    tables = [{"label": t[0], "name": t[0], "content": "foo"} for t in get_tables()]
+
+    return jsonify(results=tables) # jsonify(results=data)
 
 @app.route('/data')
 def names():
@@ -41,8 +58,6 @@ def names():
     return jsonify(data)
 
 if __name__ == '__main__':
-    # TODO discover db in directory
-    # TODO analyze tables (.tables)
     # TODO run .schema for each table
     # TODO serve initial data
     app.run(debug=True)
