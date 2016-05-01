@@ -27,6 +27,11 @@ def query_db(query, args=(), one=False):
 def get_tables():
     return query_db("SELECT name FROM sqlite_master WHERE type='table'")
 
+def get_table_content(t):
+    header = [c[1] for c in query_db("PRAGMA table_info('" + t + "')")]
+    content = query_db("SELECT * FROM " + t + " LIMIT 10")
+    return [header] + content
+
 #@app.route('/static/<path:path>')
 #def static(path):
 #    return send_from_directory('static', path)
@@ -49,6 +54,9 @@ def root():
 @app.route('/tables/')
 def tables():
     tables = [{"label": t[0], "name": t[0], "content": "foo"} for t in get_tables()]
+
+    for i in range(len(tables)):
+        tables[i]["content"] = get_table_content(tables[i]["name"])
 
     return jsonify(results=tables) # jsonify(results=data)
 
