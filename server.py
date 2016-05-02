@@ -32,11 +32,8 @@ def get_table_content(t):
     content = query_db("SELECT * FROM " + t + " LIMIT 10")
     return [header] + content
 
-#@app.route('/static/<path:path>')
-#def static(path):
-#    return send_from_directory('static', path)
-
-# init
+def get_table_numbers(t):
+    return query_db("SELECT count(*) FROM " + t, one=True)[0]
 
 DB_NAME = get_db_name()
 print 'Database:', DB_NAME
@@ -47,18 +44,19 @@ print 'Database:', DB_NAME
 def root():
     return app.send_static_file('index.html')
 
-#@app.route('/<path:filename>')
-#def send_file(filename):
-#    return send_from_directory(app.static_folder, filename)
+@app.route('/overview/')
+def overview():
+    tables = [{"name": t[0], "records": 0} for t in get_tables()]
+    for i in range(len(tables)):
+        tables[i]["records"] = get_table_numbers(tables[i]["name"])
+    return jsonify(results=tables)
 
 @app.route('/tables/')
 def tables():
     tables = [{"label": t[0], "name": t[0], "content": "foo"} for t in get_tables()]
-
     for i in range(len(tables)):
         tables[i]["content"] = get_table_content(tables[i]["name"])
-
-    return jsonify(results=tables) # jsonify(results=data)
+    return jsonify(results=tables)
 
 @app.route('/data')
 def names():

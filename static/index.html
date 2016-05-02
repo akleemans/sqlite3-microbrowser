@@ -9,6 +9,18 @@
 <div ng-cloak>
   <md-content ng-controller="ContentCtrl">
     <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Overview">
+            <md-content class="md-padding">
+              <h1 class="md-display-2">Overview</h1>
+              <p>Some Meta-Information about the database.</p>
+              <h2>Tables:</h2>
+              <table class="table table-striped table-bordered">
+                 <tr ng-repeat="row in overview">
+                     <td ng-repeat="col in row track by $index">{{col}}</td>
+                 </tr>
+                </table>
+            </md-content>
+        </md-tab>
         <md-tab ng-repeat="table in tables" label="{{table.label}}">
             <md-content class="md-padding">
               <h1 class="md-display-2">{{table.name}}</h1>
