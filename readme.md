@@ -1,22 +1,20 @@
-# Instant SQLite DB Viewer
+# SQLite3 MicroBrowser
 
-SQLite3 database viewer with Python/Flask and AngularJS.
+Lightweight SQLite3 database browser with Python/Flask and AngularJS.
 
 Just drop your SQLite3 database into the root directory and start `run.sh`, no configuration needed!
 
-## Screenshot
+[Todo: Screenshot]
+
+## Prerequisites
+* [Python](https://www.python.org/), [Flask](http://flask.pocoo.org/): `pip install flask`
+* SQLite3
 
 ## How it works
 
-First,
+First, the root directory is crawled for a database file (a file with extension 'sqlite', 'sqlite3', 'db3', 'db'). If found, some schema information and a limited amount of rows from each table are fetched and provided via a API to the AngularJS client, which builds a tab for each table and shows the table, along with some options for fetching or column filtering.
 
-## Goal
-- Beliebige DB in Verzeichnis droppen, server.py starten, Browser starten und DB viewen/editieren können
-- Tab pro Tabelle/View
-- Übersicht auf Main-Tab: Tabellennamen, Spalten
-- Sortierbare Spalten
-- Schema-Link pro Tabelle
-
-## Prerequisites
-* Python with Flask: `pip install flask`
-* SQLite
+## Features
+* Drop a SQLite database into this directory, start `run.sh` and browse your database
+* Quick overview over database
+* Tabs for each table, material design with [Angular material](https://material.angularjs.org)
