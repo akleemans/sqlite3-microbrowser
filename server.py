@@ -2,6 +2,9 @@ import os
 import sqlite3
 from flask import Flask, request, g, jsonify, send_from_directory, render_template
 
+#TODO make optional (catch if not defined)
+from eralchemy import render_er
+
 app = Flask(__name__, static_folder='static')
 
 def get_db_name():
@@ -35,8 +38,11 @@ def get_table_content(t):
 def get_table_numbers(t):
     return query_db("SELECT count(*) FROM " + t, one=True)[0]
 
+# init
+
 DB_NAME = get_db_name()
 print 'Database:', DB_NAME
+render_er('sqlite:///' + DB_NAME, 'static/schema.png')
 
 # routes
 

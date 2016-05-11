@@ -9,6 +9,7 @@ Just drop your SQLite3 database into the root directory and start `run.sh`, no c
 ## Prerequisites
 * [Python](https://www.python.org/), [Flask](http://flask.pocoo.org/): `pip install flask`
 * SQLite3
+* Optional (for schema diagram): [ERAlchemy](https://github.com/Alexis-benoist/eralchemy) (`pip install eralchemy`)
 
 ## How it works
 
@@ -18,3 +19,6 @@ First, the root directory is crawled for a database file (a file with extension 
 * Drop a SQLite database into this directory, start `run.sh` and browse your database
 * Quick overview over database
 * Tabs for each table, material design with [Angular material](https://material.angularjs.org)
+
+
+Create new DB from dump: `sqlite3 example.db < example_db.sql`
