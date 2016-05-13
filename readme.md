@@ -20,5 +20,6 @@ First, the root directory is crawled for a database file (a file with extension 
 * Quick overview over database
 * Tabs for each table, material design with [Angular material](https://material.angularjs.org)
 
+## Example database
 
-Create new DB from dump: `sqlite3 example.db < example_db.sql`
+There's a sample database included. To build it from the dump, run `sqlite3 example.db < example_db.sql`.
